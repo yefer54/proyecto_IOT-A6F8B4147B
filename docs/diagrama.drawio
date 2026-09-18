@@ -1,0 +1,280 @@
+<mxfile host="65bd71144e">
+    <diagram id="diagrama_bloques_rfid" name="Diagrama de Bloques y Conexiones">
+        <mxGraphModel dx="772" dy="475" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="920" background="#FFFFFF" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="title" value="DIAGRAMA DE BLOQUES Y TABLA DE CONEXIONES" style="text;html=1;strokeColor=#2C3E50;fillColor=#34495E;align=center;verticalAlign=middle;whiteSpace=wrap;round=1;fontSize=16;fontStyle=1;fontColor=#FFFFFF;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="20" width="1080" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="sec1_title" value="1. ARQUITECTURA DE BLOQUES Y FLUJO DE DATOS / ÓRDENES" style="text;html=1;strokeColor=none;fillColor=#EAECEE;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=13;fontStyle=1;fontColor=#2C3E50;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="85" width="1080" height="28" as="geometry"/>
+                </mxCell>
+                <mxCell id="block_rfid" value="&lt;b style=&quot;font-size: 14px;&quot;&gt;SENSOR&lt;/b&gt;&lt;br/&gt;&lt;b style=&quot;font-size: 13px;&quot;&gt;Lector RFID MFRC522&lt;/b&gt;&lt;br/&gt;&lt;hr/&gt;• Lee tarjetas RFID (UID)&lt;br/&gt;• Comunicación: Bus SPI&lt;br/&gt;• Alimentación: 3.3V" style="shape=rectangle;whiteSpace=wrap;html=1;rounded=1;fillColor=#2980B9;strokeColor=#1B4F72;fontColor=#FFFFFF;align=center;verticalAlign=top;spacingTop=10;fontSize=12;shadow=1;" parent="1" vertex="1">
+                    <mxGeometry x="50" y="130" width="230" height="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="block_esp32" value="&lt;b style=&quot;font-size: 14px;&quot;&gt;MICROCONTROLADOR&lt;/b&gt;&lt;br/&gt;&lt;b style=&quot;font-size: 13px;&quot;&gt;ESP32 DevKit v1&lt;/b&gt;&lt;br/&gt;&lt;hr/&gt;• Valida la tarjeta (30 4F 8E C0)&lt;br/&gt;• Muestreo cada 850 ms&lt;br/&gt;• Controla Servo y LED&lt;br/&gt;• Bloqueo de 13s tras 3 rechazos" style="shape=rectangle;whiteSpace=wrap;html=1;rounded=1;fillColor=#2C3E50;strokeColor=#1A252F;fontColor=#FFFFFF;align=center;verticalAlign=top;spacingTop=10;fontSize=12;shadow=1;" parent="1" vertex="1">
+                    <mxGeometry x="440" y="120" width="270" height="160" as="geometry"/>
+                </mxCell>
+                <mxCell id="block_servo" value="&lt;b style=&quot;font-size: 14px;&quot;&gt;ACTUADOR&lt;/b&gt;&lt;br/&gt;&lt;b style=&quot;font-size: 13px;&quot;&gt;Servomotor SG90&lt;/b&gt;&lt;br/&gt;&lt;hr/&gt;• Abre y cierra la puerta&lt;br/&gt;• Control: Señal PWM (50 Hz)&lt;br/&gt;• 0° (Cerrado) / 90° (Abierto)&lt;br/&gt;• Alimentación: 5V (VIN)" style="shape=rectangle;whiteSpace=wrap;html=1;rounded=1;fillColor=#D35400;strokeColor=#7E5109;fontColor=#FFFFFF;align=center;verticalAlign=top;spacingTop=8;fontSize=11;shadow=1;" parent="1" vertex="1">
+                    <mxGeometry x="870" y="120" width="240" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="block_led" value="&lt;b style=&quot;font-size: 14px;&quot;&gt;INTERFAZ LOCAL&lt;/b&gt;&lt;br/&gt;&lt;b style=&quot;font-size: 13px;&quot;&gt;LED de Estado&lt;/b&gt;&lt;br/&gt;&lt;hr/&gt;• Indicador visual visual&lt;br/&gt;• Señal Digital (GPIO 2)&lt;br/&gt;• Encendido / Parpadeos Alerta&lt;br/&gt;• Resistencia 220 Ω" style="shape=rectangle;whiteSpace=wrap;html=1;rounded=1;fillColor=#27AE60;strokeColor=#145A32;fontColor=#FFFFFF;align=center;verticalAlign=top;spacingTop=8;fontSize=11;shadow=1;" parent="1" vertex="1">
+                    <mxGeometry x="870" y="245" width="240" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="flow_rfid_esp" value="&lt;b style=&quot;color:#1B4F72;font-size:11px;&quot;&gt;DATOS DEL UID (Bus SPI)&lt;/b&gt;&lt;br/&gt;Lectura de tarjeta" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#2980B9;strokeWidth=3;fontColor=#1B4F72;fontSize=11;" parent="1" source="block_rfid" target="block_esp32" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="flow_esp_servo" value="&lt;b style=&quot;color:#7E5109;font-size:11px;&quot;&gt;ÓRDENES DE CONTROL (PWM)&lt;/b&gt;&lt;br/&gt;Giro: 0° / 90°" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.3;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#D35400;strokeWidth=3;fontColor=#7E5109;fontSize=11;" parent="1" source="block_esp32" target="block_servo" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="flow_esp_led" value="&lt;b style=&quot;color:#145A32;font-size:11px;&quot;&gt;SEÑAL DE ESTADO (DIGITAL)&lt;/b&gt;&lt;br/&gt;HIGH / LOW / Parpadeo" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.8;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#27AE60;strokeWidth=3;fontColor=#145A32;fontSize=11;" parent="1" source="block_esp32" target="block_led" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="sec2_title" value="2. TABLA DE CONEXIONES DE HARDWARE" style="text;html=1;strokeColor=none;fillColor=#EAECEE;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=13;fontStyle=1;fontColor=#2C3E50;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="375" width="1080" height="28" as="geometry"/>
+                </mxCell>
+                <mxCell id="th1" value="Componente" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#34495E;fontColor=#FFFFFF;fontStyle=1;align=center;fontSize=11;strokeColor=#2C3E50;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="410" width="130" height="28" as="geometry"/>
+                </mxCell>
+                <mxCell id="th2" value="Pin Componente" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#34495E;fontColor=#FFFFFF;fontStyle=1;align=center;fontSize=11;strokeColor=#2C3E50;" parent="1" vertex="1">
+                    <mxGeometry x="170" y="410" width="120" height="28" as="geometry"/>
+                </mxCell>
+                <mxCell id="th3" value="Pin ESP32" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#34495E;fontColor=#FFFFFF;fontStyle=1;align=center;fontSize=11;strokeColor=#2C3E50;" parent="1" vertex="1">
+                    <mxGeometry x="290" y="410" width="120" height="28" as="geometry"/>
+                </mxCell>
+                <mxCell id="th4" value="Tipo de Señal" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#34495E;fontColor=#FFFFFF;fontStyle=1;align=center;fontSize=11;strokeColor=#2C3E50;" parent="1" vertex="1">
+                    <mxGeometry x="410" y="410" width="150" height="28" as="geometry"/>
+                </mxCell>
+                <mxCell id="th5" value="Alimentación" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#34495E;fontColor=#FFFFFF;fontStyle=1;align=center;fontSize=11;strokeColor=#2C3E50;" parent="1" vertex="1">
+                    <mxGeometry x="560" y="410" width="110" height="28" as="geometry"/>
+                </mxCell>
+                <mxCell id="th6" value="Función y Explicación Breve" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#34495E;fontColor=#FFFFFF;fontStyle=1;align=center;fontSize=11;strokeColor=#2C3E50;" parent="1" vertex="1">
+                    <mxGeometry x="670" y="410" width="450" height="28" as="geometry"/>
+                </mxCell>
+                <mxCell id="r1_c1" value="Lector RFID" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#EBF5FB;fontColor=#1B4F72;fontStyle=1;align=center;fontSize=10;strokeColor=#AED6F1;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="438" width="130" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r1_c2" value="3.3V" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;align=center;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="170" y="438" width="120" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r1_c3" value="3V3" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;fontStyle=1;align=center;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="290" y="438" width="120" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r1_c4" value="Alimentación" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;align=center;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="410" y="438" width="150" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r1_c5" value="3.3V" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;align=center;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="560" y="438" width="110" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r1_c6" value="Energía para el lector RFID (opera a 3.3V)." style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;align=left;spacingLeft=5;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="670" y="438" width="450" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r2_c1" value="Lector RFID" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#EBF5FB;fontColor=#1B4F72;fontStyle=1;align=center;fontSize=10;strokeColor=#AED6F1;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="462" width="130" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r2_c2" value="GND" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;align=center;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="170" y="462" width="120" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r2_c3" value="GND" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;fontStyle=1;align=center;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="290" y="462" width="120" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r2_c4" value="Tierra Común" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;align=center;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="410" y="462" width="150" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r2_c5" value="0V" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;align=center;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="560" y="462" width="110" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r2_c6" value="Referencia de masa común." style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;align=left;spacingLeft=5;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="670" y="462" width="450" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r3_c1" value="Lector RFID" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#EBF5FB;fontColor=#1B4F72;fontStyle=1;align=center;fontSize=10;strokeColor=#AED6F1;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="486" width="130" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r3_c2" value="RST" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;align=center;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="170" y="486" width="120" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r3_c3" value="GPIO 21" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;fontStyle=1;align=center;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="290" y="486" width="120" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r3_c4" value="Digital Salida" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;align=center;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="410" y="486" width="150" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r3_c5" value="3.3V Lógico" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;align=center;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="560" y="486" width="110" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r3_c6" value="Línea para reiniciar el lector RFID." style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;align=left;spacingLeft=5;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="670" y="486" width="450" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r4_c1" value="Lector RFID" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#EBF5FB;fontColor=#1B4F72;fontStyle=1;align=center;fontSize=10;strokeColor=#AED6F1;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="510" width="130" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r4_c2" value="SDA (CS)" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;align=center;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="170" y="510" width="120" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r4_c3" value="GPIO 5" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;fontStyle=1;align=center;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="290" y="510" width="120" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r4_c4" value="SPI (Chip Select)" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;align=center;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="410" y="510" width="150" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r4_c5" value="3.3V Lógico" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;align=center;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="560" y="510" width="110" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r4_c6" value="Selecciona el lector para la comunicación SPI." style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;align=left;spacingLeft=5;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="670" y="510" width="450" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r5_c1" value="Lector RFID" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#EBF5FB;fontColor=#1B4F72;fontStyle=1;align=center;fontSize=10;strokeColor=#AED6F1;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="534" width="130" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r5_c2" value="SCK" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;align=center;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="170" y="534" width="120" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r5_c3" value="GPIO 18" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;fontStyle=1;align=center;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="290" y="534" width="120" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r5_c4" value="SPI (Clock)" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;align=center;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="410" y="534" width="150" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r5_c5" value="3.3V Lógico" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;align=center;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="560" y="534" width="110" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r5_c6" value="Reloj de sincronización SPI." style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;align=left;spacingLeft=5;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="670" y="534" width="450" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r6_c1" value="Lector RFID" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#EBF5FB;fontColor=#1B4F72;fontStyle=1;align=center;fontSize=10;strokeColor=#AED6F1;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="558" width="130" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r6_c2" value="MOSI" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;align=center;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="170" y="558" width="120" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r6_c3" value="GPIO 23" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;fontStyle=1;align=center;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="290" y="558" width="120" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r6_c4" value="SPI (Master Out)" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;align=center;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="410" y="558" width="150" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r6_c5" value="3.3V Lógico" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;align=center;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="560" y="558" width="110" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r6_c6" value="Envía datos y comandos desde el ESP32 al lector." style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;align=left;spacingLeft=5;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="670" y="558" width="450" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r7_c1" value="Lector RFID" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#EBF5FB;fontColor=#1B4F72;fontStyle=1;align=center;fontSize=10;strokeColor=#AED6F1;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="582" width="130" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r7_c2" value="MISO" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;align=center;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="170" y="582" width="120" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r7_c3" value="GPIO 19" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;fontStyle=1;align=center;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="290" y="582" width="120" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r7_c4" value="SPI (Master In)" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;align=center;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="410" y="582" width="150" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r7_c5" value="3.3V Lógico" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;align=center;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="560" y="582" width="110" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r7_c6" value="Recibe datos del UID desde el lector hacia el ESP32." style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;align=left;spacingLeft=5;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="670" y="582" width="450" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r8_c1" value="Servomotor SG90" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FEF9E7;fontColor=#7E5109;fontStyle=1;align=center;fontSize=10;strokeColor=#F9E79F;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="606" width="130" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r8_c2" value="V+ (Rojo)" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;align=center;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="170" y="606" width="120" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r8_c3" value="VIN (5V)" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;fontStyle=1;align=center;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="290" y="606" width="120" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r8_c4" value="Alimentación DC" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;align=center;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="410" y="606" width="150" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r8_c5" value="5V DC" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;align=center;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="560" y="606" width="110" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r8_c6" value="Energía de 5V requerida para dar fuerza al servomotor." style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;align=left;spacingLeft=5;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="670" y="606" width="450" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r9_c1" value="Servomotor SG90" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FEF9E7;fontColor=#7E5109;fontStyle=1;align=center;fontSize=10;strokeColor=#F9E79F;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="630" width="130" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r9_c2" value="GND (Negro)" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;align=center;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="170" y="630" width="120" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r9_c3" value="GND" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;fontStyle=1;align=center;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="290" y="630" width="120" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r9_c4" value="Tierra Común" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;align=center;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="410" y="630" width="150" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r9_c5" value="0V" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;align=center;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="560" y="630" width="110" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r9_c6" value="Conexión de masa con el ESP32." style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;align=left;spacingLeft=5;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="670" y="630" width="450" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r10_c1" value="Servomotor SG90" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FEF9E7;fontColor=#7E5109;fontStyle=1;align=center;fontSize=10;strokeColor=#F9E79F;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="654" width="130" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r10_c2" value="PWM (Naranja)" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;align=center;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="170" y="654" width="120" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r10_c3" value="GPIO 13" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;fontStyle=1;align=center;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="290" y="654" width="120" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r10_c4" value="Señal PWM (50 Hz)" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;align=center;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="410" y="654" width="150" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r10_c5" value="3.3V Lógico" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;align=center;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="560" y="654" width="110" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r10_c6" value="Controla la posición del servo (0° Cerrado / 90° Abierto)." style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;align=left;spacingLeft=5;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="670" y="654" width="450" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r11_c1" value="LED de Estado" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#E8F8F5;fontColor=#145A32;fontStyle=1;align=center;fontSize=10;strokeColor=#A3E4D7;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="678" width="130" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r11_c2" value="Ánodo (+)" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;align=center;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="170" y="678" width="120" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r11_c3" value="GPIO 2" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;fontStyle=1;align=center;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="290" y="678" width="120" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r11_c4" value="Digital Salida" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;align=center;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="410" y="678" width="150" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r11_c5" value="3.3V Lógico" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;align=center;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="560" y="678" width="110" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r11_c6" value="Enciende el LED para acceso o destellos de alerta." style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;align=left;spacingLeft=5;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="670" y="678" width="450" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r12_c1" value="LED de Estado" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#E8F8F5;fontColor=#145A32;fontStyle=1;align=center;fontSize=10;strokeColor=#A3E4D7;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="702" width="130" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r12_c2" value="Cátodo (-)" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;align=center;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="170" y="702" width="120" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r12_c3" value="GND (vía 220Ω)" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;fontStyle=1;align=center;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="290" y="702" width="120" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r12_c4" value="Tierra protegida" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;align=center;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="410" y="702" width="150" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r12_c5" value="0V" style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;align=center;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="560" y="702" width="110" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="r12_c6" value="Resistencia de 220 Ω para proteger el LED y el pin." style="shape=rectangle;html=1;whiteSpace=wrap;fillColor=#FFFFFF;align=left;spacingLeft=5;fontSize=10;strokeColor=#D5D8DC;" parent="1" vertex="1">
+                    <mxGeometry x="670" y="702" width="450" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="sec3_title" value="3. RESUMEN DE INTERFACES Y ALIMENTACIÓN" style="text;html=1;strokeColor=none;fillColor=#EAECEE;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=13;fontStyle=1;fontColor=#2C3E50;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="740" width="1080" height="28" as="geometry"/>
+                </mxCell>
+                <mxCell id="tech_notes" value="&lt;b&gt;• Interfaz del Lector RFID (MFRC522):&lt;/b&gt; Utiliza comunicación por bus síncrono &lt;b&gt;SPI&lt;/b&gt; (SCK: GPIO 18, MISO: GPIO 19, MOSI: GPIO 23, CS: GPIO 5, RST: GPIO 21). Operación a 3.3V DC.&lt;br&gt;&lt;b&gt;• Interfaz del Servomotor :&lt;/b&gt; Control por pulsos de modulación &lt;b&gt;PWM&lt;/b&gt; a 50 Hz en GPIO 13. Alimentación a 5V DC (Línea VIN).&lt;br&gt;&lt;b&gt;• Interfaz Local (LED de Estado):&lt;/b&gt; Salida &lt;b&gt;Digital&lt;/b&gt; en GPIO 2 con resistencia limitadora de 220 Ω conectada a tierra." style="shape=rectangle;whiteSpace=wrap;html=1;rounded=1;fillColor=#F8F9F9;strokeColor=#BDC3C7;fontColor=#2C3E50;align=left;verticalAlign=top;spacingLeft=10;spacingTop=8;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="775" width="1080" height="70" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

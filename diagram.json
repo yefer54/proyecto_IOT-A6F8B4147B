@@ -1,0 +1,135 @@
+{
+  "version": 1,
+  "author": "Proyecto Integrador Individual",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "wokwi-esp32-devkit-v1",
+      "id": "esp",
+      "top": 20,
+      "left": 20,
+      "attrs": {}
+    },
+    {
+      "type": "board-mfrc522",
+      "id": "rfid",
+      "top": 20,
+      "left": 330,
+      "attrs": {
+        "uid": "30:4F:8E:C0"
+      }
+    },
+    {
+      "type": "wokwi-servo",
+      "id": "servo",
+      "top": 270,
+      "left": 320,
+      "attrs": {
+        "horn": "single"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led",
+      "top": 270,
+      "left": 550,
+      "attrs": {
+        "color": "green"
+      }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "resistor",
+      "top": 275,
+      "left": 480,
+      "attrs": {
+        "value": "220"
+      }
+    }
+  ],
+  "connections": [
+    [
+      "rfid:3.3V",
+      "esp:3V3",
+      "red",
+      []
+    ],
+    [
+      "rfid:GND",
+      "esp:GND.1",
+      "black",
+      []
+    ],
+    [
+      "rfid:RST",
+      "esp:D21",
+      "yellow",
+      []
+    ],
+    [
+      "rfid:SDA",
+      "esp:D5",
+      "green",
+      []
+    ],
+    [
+      "rfid:SCK",
+      "esp:D18",
+      "blue",
+      []
+    ],
+    [
+      "rfid:MOSI",
+      "esp:D23",
+      "orange",
+      []
+    ],
+    [
+      "rfid:MISO",
+      "esp:D19",
+      "purple",
+      []
+    ],
+    [
+      "servo:PWM",
+      "esp:D13",
+      "green",
+      []
+    ],
+    [
+      "servo:V+",
+      "esp:VIN",
+      "red",
+      []
+    ],
+    [
+      "servo:GND",
+      "esp:GND.2",
+      "black",
+      []
+    ],
+    [
+      "esp:D2",
+      "resistor:1",
+      "green",
+      []
+    ],
+    [
+      "resistor:2",
+      "led:A",
+      "green",
+      []
+    ],
+    [
+      "led:C",
+      "esp:GND.2",
+      "black",
+      []
+    ]
+  ],
+  "serialMonitor": {
+    "display": "always",
+    "newline": "lf",
+    "convertEol": true
+  }
+}
