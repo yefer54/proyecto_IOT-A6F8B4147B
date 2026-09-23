@@ -3,129 +3,34 @@
   "author": "Proyecto Integrador Individual",
   "editor": "wokwi",
   "parts": [
-    {
-      "type": "wokwi-esp32-devkit-v1",
-      "id": "esp",
-      "top": 20,
-      "left": 20,
-      "attrs": {}
-    },
-    {
-      "type": "board-mfrc522",
-      "id": "rfid",
-      "top": 20,
-      "left": 330,
-      "attrs": {
-        "uid": "30:4F:8E:C0"
-      }
-    },
-    {
-      "type": "wokwi-servo",
-      "id": "servo",
-      "top": 270,
-      "left": 320,
-      "attrs": {
-        "horn": "single"
-      }
-    },
-    {
-      "type": "wokwi-led",
-      "id": "led",
-      "top": 270,
-      "left": 550,
-      "attrs": {
-        "color": "green"
-      }
-    },
+    { "type": "board-esp32-devkit-c-v4", "id": "esp", "top": 0, "left": 0, "attrs": {} },
+    { "type": "board-mfrc522", "id": "rfid1", "top": -12.25, "left": 272.24, "attrs": { "uid": "30:4F:8E:C0" } },
+    { "type": "wokwi-servo", "id": "servo1", "top": 218.8, "left": 259.2, "attrs": { "horn": "single" } },
+    { "type": "wokwi-led", "id": "led1", "top": 207.6, "left": 503, "attrs": { "color": "green" } },
     {
       "type": "wokwi-resistor",
-      "id": "resistor",
-      "top": 275,
-      "left": 480,
-      "attrs": {
-        "value": "220"
-      }
+      "id": "r1",
+      "top": 167.15,
+      "left": 422.4,
+      "attrs": { "value": "220" }
     }
   ],
   "connections": [
-    [
-      "rfid:3.3V",
-      "esp:3V3",
-      "red",
-      []
-    ],
-    [
-      "rfid:GND",
-      "esp:GND.1",
-      "black",
-      []
-    ],
-    [
-      "rfid:RST",
-      "esp:D21",
-      "yellow",
-      []
-    ],
-    [
-      "rfid:SDA",
-      "esp:D5",
-      "green",
-      []
-    ],
-    [
-      "rfid:SCK",
-      "esp:D18",
-      "blue",
-      []
-    ],
-    [
-      "rfid:MOSI",
-      "esp:D23",
-      "orange",
-      []
-    ],
-    [
-      "rfid:MISO",
-      "esp:D19",
-      "purple",
-      []
-    ],
-    [
-      "servo:PWM",
-      "esp:D13",
-      "green",
-      []
-    ],
-    [
-      "servo:V+",
-      "esp:VIN",
-      "red",
-      []
-    ],
-    [
-      "servo:GND",
-      "esp:GND.2",
-      "black",
-      []
-    ],
-    [
-      "esp:D2",
-      "resistor:1",
-      "green",
-      []
-    ],
-    [
-      "resistor:2",
-      "led:A",
-      "green",
-      []
-    ],
-    [
-      "led:C",
-      "esp:GND.2",
-      "black",
-      []
-    ]
+    [ "esp:TX", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX", "$serialMonitor:TX", "", [] ],
+    [ "rfid1:SDA", "esp:5", "white", [ "h0" ] ],
+    [ "rfid1:SCK", "esp:18", "gray", [ "h0" ] ],
+    [ "rfid1:MOSI", "esp:23", "violet", [ "h0" ] ],
+    [ "rfid1:MISO", "esp:19", "blue", [ "h0" ] ],
+    [ "rfid1:RST", "esp:21", "green", [ "h0" ] ],
+    [ "rfid1:3.3V", "esp:3V3", "gold", [ "h0" ] ],
+    [ "esp:2", "r1:1", "green", [ "h350.59" ] ],
+    [ "r1:2", "led1:A", "green", [ "v0", "h75.6", "v76.8" ] ],
+    [ "esp:13", "servo1:PWM", "#8f4814", [ "h-4.61", "v124.8" ] ],
+    [ "rfid1:GND", "esp:GND.1", "black", [ "h0" ] ],
+    [ "servo1:V+", "esp:GND.2", "red", [ "h-163.2", "v-28.7" ] ],
+    [ "servo1:GND", "esp:GND.2", "black", [ "h-163.2", "v-28.8" ] ],
+    [ "led1:C", "esp:GND.2", "black", [ "v0", "h-422" ] ]
   ],
   "serialMonitor": {
     "display": "always",

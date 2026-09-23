@@ -16,7 +16,6 @@ const unsigned long TIEMPO_ACCESO = 3000;
 
 const int RECHAZOS_MAX_BLOQUEO = 3;
 const int CONFIRMACION_ALARMA = 2;
-const int MARGEN_RETORNO = 4;
 const int ESTADO_SEGURO_ANGULO = 0;
 const int ACCESO_CONCEDIDO_ANGULO = 90;
 
@@ -62,7 +61,6 @@ void manejarAccesoAutorizado() {
   posicionarServo(ACCESO_CONCEDIDO_ANGULO);
 
   Serial.println("ACCESO AUTORIZADO - Credencial válida.");
-  Serial.println("Servomotor a " + String(ACCESO_CONCEDIDO_ANGULO) + "° (Abierto), LED ENCENDIDO.");
 }
 
 void manejarAccesoDenegado() {
@@ -88,6 +86,8 @@ void manejarAccesoDenegado() {
   if (rechazosConsecutivos >= RECHAZOS_MAX_BLOQUEO) {
     estadoActual = ESTADO_BLOQUEADO;
     inicioBloqueoMs = millis();
+    ultimoParpadeoMs = millis();
+    estadoLedBloqueo = false;
     Serial.println(" Sistema BLOQUEADO por " + String(TIEMPO_BLOQUEO / 1000) + " s. Servomotor en Estado Seguro (" + String(ESTADO_SEGURO_ANGULO) + "°).");
   }
 }
@@ -106,7 +106,7 @@ void actualizarEstadoBloqueo() {
     estadoActual = ESTADO_NORMAL;
     rechazosConsecutivos = 0;
     digitalWrite(LED_PIN, LOW);
-    Serial.println(" Bloqueo de 13s finalizado. Estado restablecido (Margen retorno: " + String(MARGEN_RETORNO) + ").");
+    Serial.println(" Bloqueo de 13s finalizado. Estado restablecido");
   }
 }
 
@@ -116,7 +116,6 @@ void verificarEstadoAcceso() {
       estadoActual = ESTADO_NORMAL;
       posicionarServo(ESTADO_SEGURO_ANGULO);
       digitalWrite(LED_PIN, LOW);
-      Serial.println(" Tiempo de acceso finalizado. Servomotor en Estado Seguro (" + String(ESTADO_SEGURO_ANGULO) + "°).");
     }
   }
 }
