@@ -1,20 +1,16 @@
 #ifndef SECRETS_EXAMPLE_H
 #define SECRETS_EXAMPLE_H
 
-// Configuración de Wi-Fi
 #define SECRET_SSID "Wokwi-GUEST"
 #define SECRET_PASS ""
 
-// Configuración del Servidor MQTT
-#define SECRET_MQTT_SERVER "mqtt3.thingspeak.com"
+
+#define SECRET_MQTT_SERVER "host.wokwi.internal"
 #define SECRET_MQTT_PORT 1883
 
-// Credenciales MQTT de ThingSpeak
-#define SECRET_MQTT_CLIENT_ID "TU_MQTT_CLIENT_ID"
-#define SECRET_MQTT_USERNAME "TU_MQTT_USERNAME"
-#define SECRET_MQTT_PASSWORD "TU_MQTT_PASSWORD"
 
-// ID del Canal de ThingSpeak
-#define SECRET_CHANNEL_ID "TU_CANAL_ID"
+#define SECRET_MQTT_CLIENT_ID "ESP32_IOT-A6F8B4147B"
+#define SECRET_MQTT_USERNAME ""
+#define SECRET_MQTT_PASSWORD ""
 
 #endif // SECRETS_EXAMPLE_H
