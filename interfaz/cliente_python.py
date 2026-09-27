@@ -51,13 +51,8 @@ def validar_json_telemetria(data):
 def on_connect(client, userdata, flags, rc, *args):
     if rc == 0:
         print(f"\n Conexión exitosa al broker Mosquitto ({BROKER_HOST}:{BROKER_PORT})")
-        # Suscribirse a todos los subtemas de la asignación 3.4
         client.subscribe([(TOPIC_TELEMETRY, 0), (TOPIC_STATUS, 0), (TOPIC_ALERT, 0), (TOPIC_COMMAND, 0)])
-        print(f" Escuchando en topics:")
-        print(f"  - Telemetría: {TOPIC_TELEMETRY}")
-        print(f"  - Estado:     {TOPIC_STATUS}")
-        print(f"  - Alertas:    {TOPIC_ALERT}")
-        print(f"  - Comandos:   {TOPIC_COMMAND}\n")
+        
     else:
         print(f"ERROR CONEXIÓN - Código de retorno: {rc}")
 
@@ -122,24 +117,24 @@ def CLI_envio_comandos(client):
         if opcion == "1":
             client.publish(TOPIC_COMMAND, "AUTO")
             print(f"[ENVIADO] -> '{TOPIC_COMMAND}': AUTO")
-            print("  ℹ️ Explicación: Reactiva el control automático mediante lecturas del sensor RFID.")
+            print("--- Reactiva el control automático mediante lecturas del sensor RFID ---")
         elif opcion == "2":
             client.publish(TOPIC_COMMAND, "ABRIR")
             print(f"[ENVIADO] -> '{TOPIC_COMMAND}': ABRIR")
-            print("  ℹ️ Explicación: Abre manualmente la puerta situando el servomotor a 90°.")
+            print("--- Explicación: Abre manualmente la puerta situando el servomotor a 90° ---")
         elif opcion == "3":
             client.publish(TOPIC_COMMAND, "CERRAR")
             print(f"[ENVIADO] -> '{TOPIC_COMMAND}': CERRAR")
-            print("  ℹ️ Explicación: Cierra manualmente la puerta situando el servomotor a 0° (Estado Seguro).")
+            print("--- Explicación: Cierra manualmente la puerta situando el servomotor a 0° (Estado Seguro) ---")
         elif opcion == "4":
             client.publish(TOPIC_COMMAND, "COMANDO_DESCONOCIDO")
             print(f"[ENVIADO] -> '{TOPIC_COMMAND}': COMANDO_DESCONOCIDO")
-            print("  ℹ️ Explicación: Prueba el rechazo de órdenes inválidas sin alterar el actuador ni reiniciar el ESP32.")
+            print("--- Explicación: Prueba el rechazo de órdenes inválidas sin alterar el actuador ni reiniciar el ESP32 ---")
         elif opcion == "5":
             custom_cmd = input("Ingrese el comando a enviar: ").strip()
             client.publish(TOPIC_COMMAND, custom_cmd)
             print(f"[ENVIADO] -> '{TOPIC_COMMAND}': {custom_cmd}")
-            print("  ℹ️ Explicación: Envió una orden personalizada para evaluación del ESP32.")
+            print("--- Explicación: Envió una orden personalizada para evaluación del ESP32 ---")
         elif opcion == "6":
             print("[SALIR] Finalizando cliente Python...")
             client.disconnect()

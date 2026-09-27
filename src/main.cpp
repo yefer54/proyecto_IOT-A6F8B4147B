@@ -163,27 +163,18 @@ void publicarAlertaInmediata(String evento, String detalles) {
   if (!MQTTClient.connected()) return;
 
   String payload = "{";
-  payload += "\"device_id\":\"" + String(DEVICE_ID) + "\",";
   payload += "\"event\":\"" + evento + "\",";
   if (detalles.length() > 0) {
     payload += "\"details\":\"" + detalles + "\",";
   }
-  payload += "\"mode\":\"" + obtenerNombreModo() + "\",";
-  payload += "\"alarm\":true,";
-  payload += "\"timestamp\":" + String(millis());
-  payload += "}";
 
   MQTTClient.publish(TOPIC_ALERT, payload.c_str());
 
-  String formattedSerial = " 🚨 MQTT ALERTA INMEDIATA {\r\n";
-  formattedSerial += "  \"device_id\": \"" + String(DEVICE_ID) + "\",\r\n";
+  String formattedSerial = " MQTT ALERTA INMEDIATA {\r\n";
   formattedSerial += "  \"event\": \"" + evento + "\",\r\n";
   if (detalles.length() > 0) {
     formattedSerial += "  \"details\": \"" + detalles + "\",\r\n";
   }
-  formattedSerial += "  \"mode\": \"" + obtenerNombreModo() + "\",\r\n";
-  formattedSerial += "  \"alarm\": true,\r\n";
-  formattedSerial += "  \"timestamp\": " + String(millis()) + "\r\n}";
 
   Serial.println(formattedSerial);
 }
@@ -234,7 +225,7 @@ void procesarComandoMQTT(String comando) {
   else {
     Serial.println(" [MQTT RECHAZADO] Comando 'COMANDO_DESCONOCIDO' o inválido: '" + comando + "'. Rechazado sin mover el actuador ni reiniciar el ESP32.");
 
-    String statusErr = "{\"status\":\"REJECTED\",\"error\":\"COMANDO_DESCONOCIDO\",\"command\":\"" + comando + "\"}";
+    String statusErr = "{\"status\":\"RECHAZADO\",\"error\":\"COMANDO_DESCONOCIDO\",\"command\":\"" + comando + "\"}";
     MQTTClient.publish(TOPIC_STATUS, statusErr.c_str());
   }
 }
@@ -374,7 +365,7 @@ void verificarConexionRed() {
       if (MQTTClient.connect(mqttClientId, mqttUsername, mqttPassword)) {
         Serial.println("¡Conectado exitosamente!");
         MQTTClient.subscribe(TOPIC_COMMAND);
-        MQTTClient.publish(TOPIC_STATUS, "{\"status\":\"CONNECTED\",\"device_id\":\"IOT-A6F8B4147B\"}");
+        MQTTClient.publish(TOPIC_STATUS, "{\"status\":\"CONECTADO\",\"device_id\":\"IOT-A6F8B4147B\"}");
       } else {
         Serial.println("Fallo. Estado MQTT: " + String(MQTTClient.state()));
       }
